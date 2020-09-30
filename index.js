@@ -82,12 +82,19 @@
 
 // import redux file
 const redux = require('redux')
+const reduxLogger = require('redux-logger')
 
 // createStore
 const createStore = redux.createStore
 
 // use this to enable to use more than 1 reducer
 const combineReducers = redux.combineReducers
+
+// create apply middleware
+const applyMiddleware = redux.applyMiddleware
+
+// create logger
+const logger = reduxLogger.createLogger()
 
 // create Action string constant
 const BUY_CAKE = 'BUY_CAKE'
@@ -175,7 +182,7 @@ const rootReducer = combineReducers({
 
 // create store
 // const store = createStore(reducer)
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(logger))
 console.log('Initial state: ', store.getState())
 const unsubscribe = store.subscribe(()=> console.log('Updated State: ', store.getState()))
 store.dispatch(buyCake())
